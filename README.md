@@ -1,73 +1,118 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Cohorte FT48 - Módulo 4
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## TypeScript
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+- [TypeScript - Documentación Oficial](https://www.typescriptlang.org/)
+- [TypeScript](./XpertReadmes/TypeScript.md)
 
-## Description
+## Nest
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- [Nest JS - Documentación Oficial](https://nestjs.com/)
+- [CLI - Command Line Interface](./resume_lectures/NestJS-CLI.md)
+- [Configuración](./resume_lectures/NestJS-Configuration.md)
+- [Decoradores (Decorators)](./resume_lectures/NestJS-Decorators.md)
+- [Implementar Morgan en Nest JS](./resume_lectures/NestJS-Morgan.md)
 
-## Installation
+## 01 - Backend Architecture
 
-```bash
-$ npm install
-```
+- [Link al resumen de la Clase](./resume_lectures/NestJS-01.md)
+- [Status Code - Cats](https://http.cat/)
+- [Status Code - Dogs](https://http.dog/)
+- [LucidChart - Crear Diagrama Entigad Relación](https://www.lucidchart.com)
 
-## Running the app
+## 02 - Nest JS Fundamentals I
 
-```bash
-# development
-$ npm run start
+- [Link al resumen de la Clase](./resume_lectures/NestJS-02.md)
 
-# watch mode
-$ npm run start:dev
+## 03 - Nest JS Fundamentals II
 
-# production mode
-$ npm run start:prod
-```
+- [Link al resumen de la Clase](./resume_lectures/NestJS-03.md)
 
-## Test
+## 04 - Nest JS Routing
 
-```bash
-# unit tests
-$ npm run test
+- [Link al resumen de la Clase](./resume_lectures/NestJS-04.md)
 
-# e2e tests
-$ npm run test:e2e
+## 05 - Nest JS & TypeORM
 
-# test coverage
-$ npm run test:cov
-```
+- [Link al resumen de la Clase](./resume_lectures/NestJS-05.md)
 
-## Support
+## 06 - Nest JS Pipes
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- [Link al resumen de la Clase](./resume_lectures/NestJS-06.md)
 
-## Stay in touch
+## 07 - Nest JS File Upload
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- [Link al resumen de la Clase](./resume_lectures/NestJS-07.md)
 
-## License
+## 08 - Nest JS Authentication I
 
-Nest is [MIT licensed](LICENSE).
+- [Link al resumen de la Clase](./resume_lectures/NestJS-08.md)
+
+## 09 - Nest JS Authentication II
+
+- [Link al resumen de la Clase](./resume_lectures/NestJS-09.md)
+
+## 10 - Nest JS Testing
+
+- [Link al resumen de la Clase](./resume_lectures/NestJS-10.md)
+
+## 11 - Nest JS Open API
+
+- [Link al resumen de la Clase](./resume_lectures/NestJS-11.md)
+
+## 12 - Docker
+
+- [Link al resumen de la Clase](./resume_lectures/NestJS-12.md)
+
+## 13 - Deployment
+
+- [Link al resumen de la Clase](./resume_lectures/NestJS-13.md)
+
+## 14 - JavaScript III
+
+- [Link al resumen de la Clase](./resume_lectures/NestJS-14.md)
+
+
+
+Usa las entidades y repositorios: En tus servicios o controladores, puedes inyectar el repositorio de una entidad para realizar operaciones en la base de datos. Por ejemplo:
+TypeScript
+
+// user.service.ts
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { User } from './user.entity';
+
+@Injectable()
+export class UserService {
+  constructor(
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+  ) {}
+
+  async findAll(): Promise<User[]> {
+    return this.userRepository.find();
+  }
+
+  // ... otras operaciones
+}
+Código generado por IA. Revisar y usar cuidadosamente. Más información sobre preguntas frecuentes.
+Exporta el módulo de base de datos: En tu módulo principal (por lo general, app.module.ts), importa y exporta el módulo de base de datos:
+TypeScript
+
+// app.module.ts
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from './user.entity'; // Importa tus entidades
+import { UserService } from './user.service';
+
+@Module({
+  imports: [
+    TypeOrmModule.forRoot(), // Configuración global de TypeORM
+    TypeOrmModule.forFeature([User]), // Repositorios disponibles
+  ],
+  providers: [UserService],
+})
+export class AppModule {}
+Código generado por IA. Revisar y usar cuidadosamente. Más información sobre preguntas frecuentes.
+¡Listo! Ahora tienes TypeORM configurado en tu proyecto Nest.js. Puedes comenzar a crear tus servicios, controladores y rutas para interactuar con la base de datos. Si tienes más preguntas o necesitas más detalles, no dudes en preguntar. 😊
