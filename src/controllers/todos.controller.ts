@@ -5,7 +5,7 @@ import { TodoService } from "src/services/todos.service";
 export class TodoController {
 constructor(private readonly todoService:TodoService){}
     @Get()
-    getTodos():string{
-        return this.todoService.getTodo()
+    getTodos():any{
+        return this.todoService.getTodos()
     }
 }

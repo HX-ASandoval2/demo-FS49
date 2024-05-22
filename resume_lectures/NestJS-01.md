@@ -68,6 +68,8 @@
   - **Necesidad de un diseño específico**. Necesita que la aplicación esté construida de modo que soporte escalabilidad vertical, lo que puede requerir modificaciones en el diseño original.
   - **Opción menos económica**. Aunque más potente y de mejor rendimiento, suele ser una opción menos económica, ya que requiere de varios servidores.
 
+<img src="./assets/Escalamiento.png" style="margin: 20px 0 60px 0">
+
 ## 🎯 IMPORTANTE
 
 - En programación existen múltiples herramientas, NO existen herramientas mejores o peores, el éxito de un proyecto depende de utilizar la mejor solución al problema que intentamos resolver.
