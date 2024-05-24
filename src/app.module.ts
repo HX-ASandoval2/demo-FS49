@@ -39,7 +39,7 @@ import typeOrmConfig from './config/typeorm'
     provide:APP_INTERCEPTOR,
     useClass: DateAdderInterceptor
   },
-  UsersDbService
+  // UsersDbService
 ]
 })
 export class AppModule {}
