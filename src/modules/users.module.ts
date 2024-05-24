@@ -1,8 +1,11 @@
 import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
+import { TypeOrmModule } from "@nestjs/typeorm";
 import { response } from "express";
 import { UserController } from "src/controllers/users.controller";
+import { User } from "src/entities/user.entity";
 import { LoggerMiddleware } from "src/middlewares/logger";
 import { UserRepository } from "src/repositories/users.repository";
+import { UsersDbService } from "src/services/users-db.service";
 import { UserService } from "src/services/users.service";
 
 const userMockService = {
@@ -10,10 +13,10 @@ const userMockService = {
 }
 
 @Module({
-    imports:[],
+    imports:[TypeOrmModule.forFeature([User])],
     controllers:[UserController],
     providers:[
-        UserService, UserRepository,
+        UserService, UserRepository, UsersDbService,
         {
             provide:"API_USERS",
             useFactory: async () => {
@@ -31,7 +34,7 @@ const userMockService = {
                 return cleanUsers;
             }
         }
-    ]
+    ],
     // providers:[{
     //     provide:UserService,
     //     useClass:UserService
@@ -40,6 +43,8 @@ const userMockService = {
     //     provide:UserService,
     //     useValue:userMockService
     // }]
+
+    exports:[UsersDbService]
 })
 export class UsersModule implements NestModule{
     configure(consumer: MiddlewareConsumer) {

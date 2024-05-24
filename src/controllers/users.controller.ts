@@ -17,6 +17,7 @@ import {
 import { Request, Response } from 'express';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { DateAdderInterceptor } from 'src/interceptors/date-adder.interceptor';
+import { UsersDbService } from 'src/services/users-db.service';
 import { UserService } from 'src/services/users.service';
 
 //* host/path
@@ -26,7 +27,7 @@ import { UserService } from 'src/services/users.service';
 @Controller('users')
 // @UseGuards(AuthGuard)
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService, private readonly userDbService: UsersDbService) {}
 
   @Get()
   getUsers(@Query('name') name: string) {
@@ -85,16 +86,17 @@ export class UserController {
   }
 
   //* request = { now: 23/5/2024, ... }
-  @Post()
+  @Put()
   @UseInterceptors(DateAdderInterceptor)
   updateUser(@Body() user: any, @Req() request: Request & { now: string }) {
     const modifiedUser = { ...user, createdAt: request.now };
     return this.userService.createUser(modifiedUser);
   }
 
-  @Put()
-  createUser() {
-    return 'Esta ruta crea un usuario';
+  @Post()
+  createUser(@Body() user: any, @Req() request:Request  & { now: string }) {
+    const modifiedUser = { ...user, createdAt: request.now  };
+    return this.userDbService.create(modifiedUser)
   }
 
   @Delete()
