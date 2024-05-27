@@ -43,8 +43,6 @@ const userMockService = {
     //     provide:UserService,
     //     useValue:userMockService
     // }]
-
-    exports:[UsersDbService]
 })
 export class UsersModule implements NestModule{
     configure(consumer: MiddlewareConsumer) {

@@ -5,7 +5,11 @@ import {
   Get,
   Headers,
   HttpCode,
+  HttpException,
+  HttpStatus,
+  NotFoundException,
   Param,
+  ParseUUIDPipe,
   Post,
   Put,
   Query,
@@ -13,8 +17,11 @@ import {
   Res,
   UseGuards,
   UseInterceptors,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { UserBodyDto } from 'src/dtos/userBody.dto';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { DateAdderInterceptor } from 'src/interceptors/date-adder.interceptor';
 import { UsersDbService } from 'src/services/users-db.service';
@@ -80,10 +87,25 @@ export class UserController {
     return 'Esta ruta imprime el request por consola';
   }
 
+  //? ParseUUID
   @Get(':id')
-  getUserById(@Param('id') id: string) {
-    return this.userService.getUserById(Number(id));
+  async getUserById(@Param('id', ParseUUIDPipe) id: string) {
+    const user = await this.userDbService.getUserById(id);
+
+    if(!user) throw new NotFoundException('Usuario no encontrado')
+    return user
   }
+
+  // ? ValidationPipe local
+  // @Get(':id')
+  // @UsePipes(new ValidationPipe({transform:true}))
+  // getUserById(@Param('id') id: number) {
+    
+  //   console.log(typeof id);
+  //   return `Este es el id de usuario ${id}`
+    
+    // return this.userDbService.getUserById(id);
+  // }
 
   //* request = { now: 23/5/2024, ... }
   @Put()
@@ -94,13 +116,21 @@ export class UserController {
   }
 
   @Post()
-  createUser(@Body() user: any, @Req() request:Request  & { now: string }) {
+  createUser(@Body() user: UserBodyDto, @Req() request:Request  & { now: string }) {
     const modifiedUser = { ...user, createdAt: request.now  };
     return this.userDbService.create(modifiedUser)
   }
 
   @Delete()
   deleteUser() {
-    return 'Esta ruta elimina un usuario';
+    // return 'Esta ruta elimina un usuario';
+    try {
+      throw Error()
+    } catch (error) {
+      throw new HttpException({
+        status: HttpStatus.I_AM_A_TEAPOT,
+        error:"Envío de cafecito fallido"
+      }, HttpStatus.I_AM_A_TEAPOT)
+    }
   }
 }

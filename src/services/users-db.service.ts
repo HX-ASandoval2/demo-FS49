@@ -8,6 +8,15 @@ export class UsersDbService {
     constructor(@InjectRepository(User) private userDBRepository: Repository<User>){}
 
     async create(user:any){
+        console.log(user);
+        
         return await this.userDBRepository.save(user)
     }
+
+    async getUserById (id:string) {
+        return await this.userDBRepository.findOneBy({ id })
+    }
+
 }
+
+

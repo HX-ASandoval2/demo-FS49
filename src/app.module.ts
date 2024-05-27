@@ -9,9 +9,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { User } from './entities/user.entity';
 import { Todo } from './entities/todo.entity';
-import { UsersDbService } from './services/users-db.service';
 
 import typeOrmConfig from './config/typeorm'
+
 
 @Module({
   imports: [
@@ -42,4 +42,5 @@ import typeOrmConfig from './config/typeorm'
   // UsersDbService
 ]
 })
+
 export class AppModule {}
