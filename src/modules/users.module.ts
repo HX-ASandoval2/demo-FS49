@@ -1,10 +1,12 @@
 import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { response } from "express";
+import { CloudinaryConfig } from "src/config/cloudinary";
 import { UserController } from "src/controllers/users.controller";
 import { User } from "src/entities/user.entity";
 import { LoggerMiddleware } from "src/middlewares/logger";
 import { UserRepository } from "src/repositories/users.repository";
+import { CloudinaryService } from "src/services/cloudinary.service";
 import { UsersDbService } from "src/services/users-db.service";
 import { UserService } from "src/services/users.service";
 
@@ -16,7 +18,7 @@ const userMockService = {
     imports:[TypeOrmModule.forFeature([User])],
     controllers:[UserController],
     providers:[
-        UserService, UserRepository, UsersDbService,
+        UserService, UserRepository, UsersDbService, CloudinaryConfig, CloudinaryService,
         {
             provide:"API_USERS",
             useFactory: async () => {
