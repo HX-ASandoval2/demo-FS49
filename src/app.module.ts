@@ -11,6 +11,7 @@ import { User } from './entities/user.entity';
 import { Todo } from './entities/todo.entity';
 
 import typeOrmConfig from './config/typeorm'
+import { JwtModule } from '@nestjs/jwt';
 
 
 @Module({
@@ -24,7 +25,16 @@ import typeOrmConfig from './config/typeorm'
      useFactory:(configService: ConfigService) => configService.get('typeorm')
     }),
     UsersModule,
-    TodosModule],
+    TodosModule,
+    JwtModule.register({
+      global:true,
+      secret:process.env.JWT_SECRET,
+      signOptions:{
+        expiresIn: '1h'
+      }
+    })
+  
+  ],
   controllers: [AppController],
   // providers: [AppService],
   providers:[{

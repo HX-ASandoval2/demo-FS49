@@ -26,10 +26,11 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Request, Response } from 'express';
-import { UserBodyDto } from 'src/dtos/userBody.dto';
+import { UserBodyDto, UserSignDto } from 'src/dtos/userBody.dto';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { DateAdderInterceptor } from 'src/interceptors/date-adder.interceptor';
 import { MinSizeValidationPipe } from 'src/pipes/MinSizeValidator.pipes';
+import { AuthService } from 'src/services/auth.service';
 import { CloudinaryService } from 'src/services/cloudinary.service';
 import { UsersDbService } from 'src/services/users-db.service';
 import { UserService } from 'src/services/users.service';
@@ -45,6 +46,7 @@ export class UserController {
     private readonly userService: UserService,
     private readonly userDbService: UsersDbService,
     private readonly cloudinaryService: CloudinaryService,
+    private readonly authService: AuthService
   ) {}
 
   @Get()
@@ -67,7 +69,7 @@ export class UserController {
     return 'Perfil del usuario';
   }
 
-  // @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   @Get('profile/images')
   getImages() {
     return 'Imágenes del usuario';
@@ -132,7 +134,15 @@ export class UserController {
     @Req() request: Request & { now: string },
   ) {
     const modifiedUser = { ...user, createdAt: request.now };
-    return this.userDbService.create(modifiedUser);
+    // return this.userDbService.create(modifiedUser)
+
+    return this.authService.signUp(modifiedUser)
+  }
+
+
+  @Post('signin')
+  signIn(@Body() user: UserSignDto){
+    return this.authService.signIn(user.email, user.password)
   }
 
   @Post('profile/images')
