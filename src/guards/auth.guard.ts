@@ -28,7 +28,14 @@ export class AuthGuard implements CanActivate {
         // ? Emisión -> emitido a las...
         payload.iat = new Date(payload.iat * 1000)
 
-        console.log(payload);
+        // ? damos permisos de administrador
+        payload.roles = ['admin']
+
+        console.log(payload, 'payload');
+
+        request.user = payload
+
+        console.log(request.user);
         
         return true
 
