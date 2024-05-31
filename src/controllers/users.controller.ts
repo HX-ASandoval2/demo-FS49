@@ -26,17 +26,17 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Request, Response } from 'express';
-import { Roles } from 'src/decorators/roles.decorator';
-import { UserBodyDto, UserSignDto } from 'src/dtos/userBody.dto';
-import { AuthGuard } from 'src/guards/auth.guard';
-import { RolesGuard } from 'src/guards/roles.guard';
-import { DateAdderInterceptor } from 'src/interceptors/date-adder.interceptor';
-import { MinSizeValidationPipe } from 'src/pipes/MinSizeValidator.pipes';
-import { Role } from 'src/role.enum';
-import { AuthService } from 'src/services/auth.service';
-import { CloudinaryService } from 'src/services/cloudinary.service';
-import { UsersDbService } from 'src/services/users-db.service';
-import { UserService } from 'src/services/users.service';
+import { Roles } from '../decorators/roles.decorator';
+import { UserBodyDto, UserSignDto } from '../dtos/userBody.dto';
+import { AuthGuard } from '../guards/auth.guard';
+import { RolesGuard } from '../guards/roles.guard';
+import { DateAdderInterceptor } from '../interceptors/date-adder.interceptor';
+import { MinSizeValidationPipe } from '../pipes/MinSizeValidator.pipes';
+import { Role } from '../role.enum';
+import { AuthService } from '../services/auth.service';
+import { CloudinaryService } from '../services/cloudinary.service';
+import { UsersDbService } from '../services/users-db.service';
+import { UserService } from '../services/users.service';
 
 //* host/path
 //*     /segmento1/segmento2/segmento3

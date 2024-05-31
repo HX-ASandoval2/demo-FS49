@@ -6,7 +6,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { TodoService } from 'src/services/todos.service';
+import { TodoService } from '../services/todos.service';
 
 @Controller('todos')
 export class TodoController {

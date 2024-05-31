@@ -1,15 +1,15 @@
 import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { response } from "express";
-import { CloudinaryConfig } from "src/config/cloudinary";
-import { UserController } from "src/controllers/users.controller";
-import { User } from "src/entities/user.entity";
-import { LoggerMiddleware } from "src/middlewares/logger";
-import { UserRepository } from "src/repositories/users.repository";
-import { AuthService } from "src/services/auth.service";
-import { CloudinaryService } from "src/services/cloudinary.service";
-import { UsersDbService } from "src/services/users-db.service";
-import { UserService } from "src/services/users.service";
+import { CloudinaryConfig } from "../config/cloudinary";
+import { UserController } from "../controllers/users.controller";
+import { User } from "../entities/user.entity";
+import { LoggerMiddleware } from "../middlewares/logger";
+import { UserRepository } from "../repositories/users.repository";
+import { AuthService } from "../services/auth.service";
+import { CloudinaryService } from "../services/cloudinary.service";
+import { UsersDbService } from "../services/users-db.service";
+import { UserService } from "../services/users.service";
 
 const userMockService = {
     getUsers: () => 'Este es el proveedor de servicios mock'
