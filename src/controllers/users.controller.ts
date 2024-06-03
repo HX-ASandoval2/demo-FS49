@@ -37,13 +37,11 @@ import { AuthService } from '../services/auth.service';
 import { CloudinaryService } from '../services/cloudinary.service';
 import { UsersDbService } from '../services/users-db.service';
 import { UserService } from '../services/users.service';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-//* host/path
-//*     /segmento1/segmento2/segmento3
 
-//* host/users
+@ApiTags('users')
 @Controller('users')
-// @UseGuards(AuthGuard)
 export class UserController {
   constructor(
     private readonly userService: UserService,
@@ -72,6 +70,7 @@ export class UserController {
     return 'Perfil del usuario';
   }
 
+  @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @Get('profile/images')
   getImages() {
@@ -103,6 +102,7 @@ export class UserController {
     return 'Esta ruta imprime el request por consola';
   }
 
+  @ApiBearerAuth()
   @Get('dashboard')
   @Roles(Role.Admin) // * 'admin'
   @UseGuards(AuthGuard, RolesGuard)

@@ -7,7 +7,9 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { TodoService } from '../services/todos.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('todos')
 @Controller('todos')
 export class TodoController {
   constructor(private readonly todoService: TodoService) {}
