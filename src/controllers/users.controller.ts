@@ -17,154 +17,95 @@ import {
   Put,
   Query,
   Req,
-  Res,
   UploadedFile,
   UseGuards,
   UseInterceptors,
-  UsePipes,
-  ValidationPipe,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { Request, Response } from 'express';
 import { Roles } from '../decorators/roles.decorator';
-import { UserBodyDto, UserSignDto } from '../dtos/userBody.dto';
-import { AuthGuard } from '../guards/auth.guard';
+import { UserBodyDto, UserSignDto } from '../dtos/users-body.dto';
 import { RolesGuard } from '../guards/roles.guard';
-import { DateAdderInterceptor } from '../interceptors/date-adder.interceptor';
-import { MinSizeValidationPipe } from '../pipes/MinSizeValidator.pipes';
+import { UserAuthGuard } from '../guards/user-auth.guard';
+import { DataAdderInterceptor } from '../interceptors/data-adder.interceptor';
 import { Role } from '../role.enum';
 import { AuthService } from '../services/auth.service';
 import { CloudinaryService } from '../services/cloudinary.service';
-import { UsersDbService } from '../services/users-db.service';
+import { UserDbService } from '../services/user-db.service';
 import { UserService } from '../services/users.service';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-
+import { ApiBearerAuth, ApiTags, ApiQuery } from '@nestjs/swagger';
 
 @ApiTags('users')
 @Controller('users')
+// @UseGuards(UserAuthGuard)
 export class UserController {
   constructor(
     private readonly userService: UserService,
-    private readonly userDbService: UsersDbService,
+    private readonly userDBService: UserDbService,
     private readonly cloudinaryService: CloudinaryService,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
   ) {}
-
   @Get()
+  @ApiQuery({ name:'name', required:false })
   getUsers(@Query('name') name: string) {
-    if (name) {
-      return this.userService.getUserByName(name);
-    }
-    return this.userService.getUsers();
+    if (name) return this.userService.getByName(name);
+    return this.userDBService.getUsers()
+    // return this.userService.getUsers();
   }
 
-  //* GET /users/prifile
   @Get('profile')
-  getProfile(@Headers('token') token: string) {
-    if (!token) {
-      return 'Se necesita un token!';
-    }
-    if (token !== 'ValidToken') {
-      return 'Token inválido!';
-    }
-    return 'Perfil del usuario';
+  getUserProfile(@Headers('token') token: string) {
+    if (token !== '1234') return 'Acceso denegado';
+    return 'Esta ruta devuelve el perfil del usuario';
   }
 
   @ApiBearerAuth()
-  @UseGuards(AuthGuard)
   @Get('profile/images')
-  getImages() {
-    return 'Imágenes del usuario';
-  }
-
-  //* GET /users/coffee
-  @HttpCode(418)
-  @Get('coffee')
-  getCoffee() {
-    return 'No hay café en esta ruta, soy una tetera';
-  }
-
-  //* GET /users/message
-  @Get('message')
-  getMessage(
-    @Res() response: Response,
-    @Req() request: Request & { now: string },
-  ) {
-    response.status(202).json({
-      message: 'Se aceptó la solicitud: Mensaje...',
-      data: request.now,
-    });
-  }
-
-  @Get('request')
-  getRequest(@Req() request: Request) {
-    // console.log(request);
-    return 'Esta ruta imprime el request por consola';
+  @UseGuards(UserAuthGuard)
+  getProfilePics() {
+    return 'Esta ruta devuelve las imágenes del perfil del usuario';
   }
 
   @ApiBearerAuth()
-  @Get('dashboard')
-  @Roles(Role.Admin) // * 'admin'
-  @UseGuards(AuthGuard, RolesGuard)
-  getAdmin(){
-    return 'Datos del panel de administrador'
+  @Get('admin')
+  @Roles(Role.Admin) //* 'admin'
+  @UseGuards(UserAuthGuard, RolesGuard)
+  getAdmin() {
+    return 'Esta es una ruta protegida';
   }
 
-
-  //? ParseUUID
   @Get(':id')
-  async getUserById(@Param('id', ParseUUIDPipe) id: string) {
-    const user = await this.userDbService.getUserById(id);
-
+  async getUser(@Param('id', ParseUUIDPipe) id: string) {
+    const user = await this.userDBService.getUser(id);
     if (!user) throw new NotFoundException('Usuario no encontrado');
     return user;
   }
 
-  // ? ValidationPipe local
-  // @Get(':id')
-  // @UsePipes(new ValidationPipe({transform:true}))
-  // getUserById(@Param('id') id: number) {
-
-  //   console.log(typeof id);
-  //   return `Este es el id de usuario ${id}`
-
-  // return this.userDbService.getUserById(id);
-  // }
-
-  //* request = { now: 23/5/2024, ... }
-  @Put()
-  @UseInterceptors(DateAdderInterceptor)
-  updateUser(@Body() user: any, @Req() request: Request & { now: string }) {
-    const modifiedUser = { ...user, createdAt: request.now };
-    return this.userService.createUser(modifiedUser);
+  @HttpCode(418)
+  @Get('coffee')
+  makeCoffee() {
+    return 'No puedo preparar café, soy una tetera';
   }
 
   @Post()
-  createUser(
-    @Body() user: UserBodyDto,
-    @Req() request: Request & { now: string },
-  ) {
+  @UseInterceptors(DataAdderInterceptor)
+  createUser(@Body() user: UserBodyDto, @Req() request) {
     const modifiedUser = { ...user, createdAt: request.now };
-    // return this.userDbService.create(modifiedUser)
-
-    return this.authService.signUp(modifiedUser)
+    return this.authService.signUp(modifiedUser);
   }
 
-
   @Post('signin')
-  signIn(@Body() user: UserSignDto){
-    return this.authService.signIn(user.email, user.password)
+  signIn(@Body() user: UserSignDto) {
+    return this.authService.signIn(user.email, user.password);
   }
 
   @Post('profile/images')
   @UseInterceptors(FileInterceptor('image'))
-  @UsePipes(MinSizeValidationPipe)
   async uploadProfilePic(
     @UploadedFile(
       new ParseFilePipe({
         validators: [
           new MaxFileSizeValidator({
-            maxSize: 1000000,
+            maxSize: 100000,
             message: 'El archivo debe ser menor a 100kb',
           }),
           new FileTypeValidator({
@@ -175,9 +116,12 @@ export class UserController {
     )
     file: Express.Multer.File,
   ) {
-    // console.log(file);
-
     return await this.cloudinaryService.uploadImage(file);
+  }
+
+  @Put()
+  updateUser() {
+    return 'Esta ruta actualiza un usuario';
   }
 
   @Delete()
