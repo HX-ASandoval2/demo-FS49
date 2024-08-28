@@ -25,31 +25,31 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { Roles } from '../decorators/roles.decorator';
 import { UserBodyDto, UserSignDto } from '../dtos/userBody.dto';
 import { RolesGuard } from '../guards/roles.guard';
-import { UserAuthGuard } from '../guards/user-auth.guard';
-import { DataAdderInterceptor } from '../interceptors/data-adder.interceptor';
+import { AuthGuard } from '../guards/auth.guard';
+import { DateAdderInterceptor } from '../interceptors/date-adder.interceptor';
 import { Role } from '../role.enum';
 import { AuthService } from '../services/auth.service';
 import { CloudinaryService } from '../services/cloudinary.service';
-import { UserDbService } from '../services/user-db.service';
+import { UsersDbService } from '../services/users-db.service';
 import { UserService } from '../services/users.service';
 import { ApiBearerAuth, ApiTags, ApiQuery } from '@nestjs/swagger';
 
 @ApiTags('users')
 @Controller('users')
-// @UseGuards(UserAuthGuard)
+// @UseGuards(AuthGuard)
 export class UserController {
   constructor(
     private readonly userService: UserService,
-    private readonly userDBService: UserDbService,
+    private readonly userDBService: UsersDbService,
     private readonly cloudinaryService: CloudinaryService,
     private readonly authService: AuthService,
   ) {}
   @Get()
   @ApiQuery({ name: 'name', required: false })
   getUsers(@Query('name') name: string) {
-    if (name) return this.userService.getByName(name);
-    return this.userDBService.getUsers();
-    // return this.userService.getUsers();
+    if (name) return this.userService.getUserByName(name);
+    // return this.userDBService.getUsers();
+    return this.userService.getUsers();
   }
 
   @Get('profile')
@@ -60,7 +60,7 @@ export class UserController {
 
   @ApiBearerAuth()
   @Get('profile/images')
-  @UseGuards(UserAuthGuard)
+  @UseGuards(AuthGuard)
   getProfilePics() {
     return 'Esta ruta devuelve las imágenes del perfil del usuario';
   }
@@ -68,14 +68,14 @@ export class UserController {
   @ApiBearerAuth()
   @Get('admin')
   @Roles(Role.Admin) //* 'admin'
-  @UseGuards(UserAuthGuard, RolesGuard)
+  @UseGuards(AuthGuard, RolesGuard)
   getAdmin() {
     return 'Esta es una ruta protegida';
   }
 
   @Get(':id')
   async getUser(@Param('id', ParseUUIDPipe) id: string) {
-    const user = await this.userDBService.getUser(id);
+    const user = await this.userDBService.getUserById(id);
     if (!user) throw new NotFoundException('Usuario no encontrado');
     return user;
   }
@@ -87,7 +87,7 @@ export class UserController {
   }
 
   @Post()
-  @UseInterceptors(DataAdderInterceptor)
+  @UseInterceptors(DateAdderInterceptor)
   createUser(@Body() user: UserBodyDto, @Req() request) {
     const modifiedUser = { ...user, createdAt: request.now };
     return this.authService.signUp(modifiedUser);
