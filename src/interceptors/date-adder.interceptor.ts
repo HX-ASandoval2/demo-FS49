@@ -1,10 +1,14 @@
-import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common';
+import {
+  CallHandler,
+  ExecutionContext,
+  Injectable,
+  NestInterceptor,
+} from '@nestjs/common';
 import { Observable } from 'rxjs';
 
 @Injectable()
 export class DateAdderInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-
     const now = new Date();
     const formatDate = now.toLocaleDateString('es-AR', {
       year: 'numeric',

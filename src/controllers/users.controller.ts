@@ -23,7 +23,7 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Roles } from '../decorators/roles.decorator';
-import { UserBodyDto, UserSignDto } from '../dtos/users-body.dto';
+import { UserBodyDto, UserSignDto } from '../dtos/userBody.dto';
 import { RolesGuard } from '../guards/roles.guard';
 import { UserAuthGuard } from '../guards/user-auth.guard';
 import { DataAdderInterceptor } from '../interceptors/data-adder.interceptor';
@@ -45,10 +45,10 @@ export class UserController {
     private readonly authService: AuthService,
   ) {}
   @Get()
-  @ApiQuery({ name:'name', required:false })
+  @ApiQuery({ name: 'name', required: false })
   getUsers(@Query('name') name: string) {
     if (name) return this.userService.getByName(name);
-    return this.userDBService.getUsers()
+    return this.userDBService.getUsers();
     // return this.userService.getUsers();
   }
 

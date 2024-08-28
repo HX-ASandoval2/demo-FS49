@@ -10,47 +10,46 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { User } from './entities/user.entity';
 import { Todo } from './entities/todo.entity';
 
-import typeOrmConfig from './config/typeorm'
+import typeOrmConfig from './config/typeorm';
 import { JwtModule } from '@nestjs/jwt';
-
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal:true,
-      load:[typeOrmConfig]
+      isGlobal: true,
+      load: [typeOrmConfig],
     }),
     TypeOrmModule.forRootAsync({
-     inject: [ConfigService],
-     useFactory:(configService: ConfigService) => configService.get('typeorm')
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) =>
+        configService.get('typeorm'),
     }),
     UsersModule,
     TodosModule,
     JwtModule.register({
-      global:true,
-      secret:process.env.JWT_SECRET,
-      signOptions:{
-        expiresIn: '1h'
-      }
-    })
-  
+      global: true,
+      secret: process.env.JWT_SECRET,
+      signOptions: {
+        expiresIn: '1h',
+      },
+    }),
   ],
   controllers: [AppController],
   // providers: [AppService],
-  providers:[{
-    provide: AppService,
-    useClass:AppService
-  },
-  // {
-  //   provide:APP_GUARD,
-  //   useClass: UsersAuthGuard
-  // },
-  {
-    provide:APP_INTERCEPTOR,
-    useClass: DateAdderInterceptor
-  },
-  // UsersDbService
-]
+  providers: [
+    {
+      provide: AppService,
+      useClass: AppService,
+    },
+    // {
+    //   provide:APP_GUARD,
+    //   useClass: UsersAuthGuard
+    // },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: DateAdderInterceptor,
+    },
+    // UsersDbService
+  ],
 })
-
 export class AppModule {}

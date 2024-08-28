@@ -1,23 +1,23 @@
-import { Module } from "@nestjs/common";
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { TodoController } from "../controllers/todos.controller";
-import { File } from "../entities/file.entity";
-import { TodoRepository } from "../repositories/todos.repository";
-import { TodoService } from "../services/todos.service";
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { TodoController } from '../controllers/todos.controller';
+import { File } from '../entities/file.entity';
+import { TodoRepository } from '../repositories/todos.repository';
+import { TodoService } from '../services/todos.service';
 
-
-const ACCESS = 'EstaEsMiSuperClaveSecreta'
+const ACCESS = 'EstaEsMiSuperClaveSecreta';
 
 @Module({
-    imports:[TypeOrmModule.forFeature([File])],
-    controllers:[TodoController],
-    // providers:[TodoService, TodoRepository]
-    providers:[{
-        provide:"ACCESS_TOKEN",
-        useValue:ACCESS
+  imports: [TypeOrmModule.forFeature([File])],
+  controllers: [TodoController],
+  // providers:[TodoService, TodoRepository]
+  providers: [
+    {
+      provide: 'ACCESS_TOKEN',
+      useValue: ACCESS,
     },
     TodoService,
-    TodoRepository
-]
+    TodoRepository,
+  ],
 })
-export class TodosModule{};
+export class TodosModule {}

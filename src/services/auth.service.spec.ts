@@ -40,15 +40,12 @@ describe('AuthService', () => {
     email: 'pepi@mail.com',
   };
 
-  it('signUp() creates a new user with an encripted password',
-   async () => {
-    const user = await authService.signUp(mockUser as User)
+  it('signUp() creates a new user with an encripted password', async () => {
+    const user = await authService.signUp(mockUser as User);
 
     // console.log(user);
-    
-    expect(user).toBeDefined()
-    expect(user.password).not.toEqual(mockUser.password)
-  })
 
-  
+    expect(user).toBeDefined();
+    expect(user.password).not.toEqual(mockUser.password);
+  });
 });

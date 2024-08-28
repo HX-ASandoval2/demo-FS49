@@ -8,7 +8,6 @@ interface User {
 
 @Injectable()
 export class UserRepository {
-  
   private users = [
     {
       id: 1,
@@ -41,7 +40,7 @@ export class UserRepository {
 
   createUser(user: User) {
     const id = this.users.length + 1;
-    this.users = [...this.users, { id, ...user}];
+    this.users = [...this.users, { id, ...user }];
     return this.users;
   }
 }

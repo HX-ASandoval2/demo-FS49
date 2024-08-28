@@ -1,16 +1,16 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'files' })
 export class File {
-    @PrimaryGeneratedColumn()
-    id:number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    name:string;
+  @Column()
+  name: string;
 
-    @Column()
-    mymeType:string;
+  @Column()
+  mymeType: string;
 
-    @Column({ type:"bytea" })
-    data:Buffer;
+  @Column({ type: 'bytea' })
+  data: Buffer;
 }

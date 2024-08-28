@@ -1,53 +1,54 @@
-import { BadRequestException, Injectable } from '@nestjs/common'
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { UsersDbService } from './users-db.service';
 import { User } from '../entities/user.entity';
-import * as bcrypt from 'bcrypt'
+import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-    constructor( 
-        private readonly userService: UsersDbService,
-        private readonly jwtService: JwtService
-     ){}
+  constructor(
+    private readonly userService: UsersDbService,
+    private readonly jwtService: JwtService,
+  ) {}
 
-    //? Proceso de registro del usuario
-    async signUp(user:User){
-        const findUser = await this.userService.findByEmail(user.email)
+  //? Proceso de registro del usuario
+  async signUp(user: User) {
+    const findUser = await this.userService.findByEmail(user.email);
 
-        if(findUser) throw new BadRequestException('Email already exists')
-        
-        const hashedPassword = await bcrypt.hash(user.password, 10)
+    if (findUser) throw new BadRequestException('Email already exists');
 
-        if(!hashedPassword) throw new BadRequestException('Password could not be hashed')
+    const hashedPassword = await bcrypt.hash(user.password, 10);
 
-      this.userService.create({ ...user, password:hashedPassword })
+    if (!hashedPassword)
+      throw new BadRequestException('Password could not be hashed');
 
-        return "User created successfully"
+    this.userService.create({ ...user, password: hashedPassword });
+
+    return 'User created successfully';
 
     // return newUser
-    }
+  }
 
-    // ? Proceso de inicio de sesión del usuario
-    async signIn(email:string, password: string){
-        const user = await this.userService.findByEmail(email)
+  // ? Proceso de inicio de sesión del usuario
+  async signIn(email: string, password: string) {
+    const user = await this.userService.findByEmail(email);
 
-        if(!user) throw new BadRequestException("Invalid Credentias")
+    if (!user) throw new BadRequestException('Invalid Credentias');
 
-       const isPasswordValid = await bcrypt.compare(password, user.password)
+    const isPasswordValid = await bcrypt.compare(password, user.password);
 
-       if(!isPasswordValid) throw new BadRequestException('Invalid Credentias')
+    if (!isPasswordValid) throw new BadRequestException('Invalid Credentias');
 
-        const userPayload = {
-            id:user.id,
-            email:user.email
-        }
+    const userPayload = {
+      id: user.id,
+      email: user.email,
+    };
 
-      const token =  this.jwtService.sign(userPayload)
-    
-        return {
-            message: "User logged in successfully",
-            token
-        }
-    }
+    const token = this.jwtService.sign(userPayload);
+
+    return {
+      message: 'User logged in successfully',
+      token,
+    };
+  }
 }
